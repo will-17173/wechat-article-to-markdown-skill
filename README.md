@@ -27,20 +27,20 @@ pip install requests
 ### 命令行
 
 ```bash
-python skills/wechat-article-pipeline/scripts/wechat_article_pipeline.py <微信文章链接>
+python skills/wechat-article-to-markdown/scripts/wechat_article_pipeline.py <微信文章链接>
 ```
 
 ### 示例
 
 ```bash
 # 基本用法
-python skills/wechat-article-pipeline/scripts/wechat_article_pipeline.py "https://mp.weixin.qq.com/s/xxxxxx"
+python skills/wechat-article-to-markdown/scripts/wechat_article_pipeline.py "https://mp.weixin.qq.com/s/xxxxxx"
 
 # 指定输出目录
-python skills/wechat-article-pipeline/scripts/wechat_article_pipeline.py "https://mp.weixin.qq.com/s/xxxxxx" --output-dir "./my-articles"
+python skills/wechat-article-to-markdown/scripts/wechat_article_pipeline.py "https://mp.weixin.qq.com/s/xxxxxx" --output-dir "./my-articles"
 
 # 同时保存清洗后的 HTML
-python skills/wechat-article-pipeline/scripts/wechat_article_pipeline.py "https://mp.weixin.qq.com/s/xxxxxx" --save-html
+python skills/wechat-article-to-markdown/scripts/wechat_article_pipeline.py "https://mp.weixin.qq.com/s/xxxxxx" --save-html
 ```
 
 ### 参数说明
@@ -91,7 +91,7 @@ articles/
 本项目可作为 [Claude Code](https://github.com/anthropics/claude-code) 的 skill 使用：
 
 1. 将 `skills/` 目录复制到你的项目的 `.claude/skills/` 目录下
-2. 在 Claude Code 中使用 `/wechat-article-pipeline` 调用
+2. 在 Claude Code 中使用 `/wechat-article-to-markdown` 调用
 
 ## 注意事项
 
