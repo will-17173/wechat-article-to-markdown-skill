@@ -65,9 +65,22 @@ articles/
 ## 参数
 
 - `<wechat_article_url>`：微信文章链接
-- `--output-dir`：输出目录，默认使用当前目录下的 articles
+- `--output-dir`：输出目录，默认: `{工作区}/articles`
+- `--workspace-dir`：工作区目录，默认自动检测
 - `--save-html`：是否保存清洗后的 HTML 文件
 - `--timeout`：请求超时秒数，默认 30
+
+## 工作区检测
+
+脚本会按以下优先级检测工作区目录：
+
+1. `--workspace-dir` 参数
+2. 环境变量 `WORKSPACE_DIR`
+3. 环境变量 `PROJECT_ROOT`
+4. 环境变量 `CLAUDE_WORKSPACE`
+5. 当前工作目录
+
+文章默认输出到 `{工作区}/articles/` 目录下。
 
 ## 依赖
 

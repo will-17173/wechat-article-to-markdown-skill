@@ -765,6 +765,14 @@ def print_summary(result: Dict[str, object]) -> None:
         print('  ' + ', '.join(str(item) for item in missing_images))
 
 
+def get_workspace_dir() -> Path:
+    """获取工作区目录，优先使用环境变量，否则使用当前目录。"""
+    workspace_env = os.environ.get('WORKSPACE_DIR') or os.environ.get('PROJECT_ROOT') or os.environ.get('CLAUDE_WORKSPACE')
+    if workspace_env:
+        return Path(workspace_env).resolve()
+    return Path.cwd().resolve()
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description='Fetch WeChat public articles and convert them to formatted Markdown.'
@@ -772,8 +780,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('url', help='微信文章链接')
     parser.add_argument(
         '--output-dir',
-        default='articles',
-        help='输出根目录，默认: ./articles',
+        default=None,
+        help='输出根目录，默认: {工作区}/articles',
+    )
+    parser.add_argument(
+        '--workspace-dir',
+        default=None,
+        help='工作区目录，默认自动检测（环境变量 WORKSPACE_DIR/PROJECT_ROOT/CLAUDE_WORKSPACE 或当前目录）',
     )
     parser.add_argument(
         '--save-html',
@@ -791,10 +804,23 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
+
+    # 确定工作区目录
+    if args.workspace_dir:
+        workspace_dir = Path(args.workspace_dir).resolve()
+    else:
+        workspace_dir = get_workspace_dir()
+
+    # 确定输出目录
+    if args.output_dir:
+        output_base_dir = Path(args.output_dir).resolve()
+    else:
+        output_base_dir = workspace_dir / 'articles'
+
     try:
         result = run_pipeline(
             url=args.url,
-            output_base_dir=Path(args.output_dir).resolve(),
+            output_base_dir=output_base_dir,
             save_html=args.save_html,
             timeout=args.timeout,
         )

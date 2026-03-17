@@ -48,9 +48,20 @@ python scripts/wechat_article_pipeline.py "https://mp.weixin.qq.com/s/xxxxxx" --
 | 参数 | 说明 | 默认值 |
 |------|------|--------|
 | `url` | 微信文章链接（必填） | - |
-| `--output-dir` | 输出根目录 | `./articles` |
+| `--output-dir` | 输出根目录 | `{工作区}/articles` |
+| `--workspace-dir` | 工作区目录 | 自动检测 |
 | `--save-html` | 额外保存清洗后的 HTML 文件 | 否 |
 | `--timeout` | 网络请求超时秒数 | 30 |
+
+### 工作区检测
+
+脚本会按以下优先级检测工作区目录：
+
+1. `--workspace-dir` 参数
+2. 环境变量 `WORKSPACE_DIR`
+3. 环境变量 `PROJECT_ROOT`
+4. 环境变量 `CLAUDE_WORKSPACE`
+5. 当前工作目录
 
 ## 输出结构
 
